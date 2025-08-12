@@ -1,59 +1,71 @@
 #include <stdio.h>
 
+// Constantes para movimentos das peças
+const int MOV_TORRE = 5;
+const int MOV_BISPO = 5;
+const int MOV_RAINHA = 8;
+const int CAVALO_VERTICAL = 2;  // Movimentos para cima
+const int CAVALO_HORIZONTAL = 1; // Movimentos para direita
+
+// Função recursiva para movimento da Torre
+void mover_torre(int casas) {
+    if (casas <= 0) return;  // Caso base
+    printf("Direita\n");
+    mover_torre(casas - 1);  // Chamada recursiva
+}
+
+// Função recursiva para movimento do Bispo
+void mover_bispo(int casas) {
+    if (casas <= 0) return;  // Caso base
+    printf("Cima, Direita\n");
+    mover_bispo(casas - 1);  // Chamada recursiva
+}
+
+// Função recursiva para movimento da Rainha
+void mover_rainha(int casas) {
+    if (casas <= 0) return;  // Caso base
+    printf("Esquerda\n");
+    mover_rainha(casas - 1);  // Chamada recursiva
+}
+
 int main() {
-    // Constantes para movimentos das peças básicas
-    const int MOV_TORRE = 5;
-    const int MOV_BISPO = 5;
-    const int MOV_RAINHA = 8;
-    
-    // Constantes para movimento do Cavalo
-    const int MOV_CAVALO_VERTICAL = 2;  // Movimentos para baixo
-    const int MOV_CAVALO_HORIZONTAL = 1; // Movimentos para esquerda
+    // Movimento da Torre (recursivo)
+    printf("Movimento da Torre (recursivo):\n");
+    mover_torre(MOV_TORRE);
 
-    // Movimento da Torre (horizontal para direita) usando FOR
-    printf("Movimento da Torre:\n");
-    for (int i = 0; i < MOV_TORRE; i++) {
-        printf("Direita\n");
-    }
-
-    // Movimento do Bispo (diagonal superior direita) usando WHILE
-    printf("\nMovimento do Bispo:\n");
-    int contador_bispo = 0;
-    while (contador_bispo < MOV_BISPO) {
-        printf("Cima, Direita\n");
-        contador_bispo++;
-    }
-
-    // Movimento da Rainha (horizontal para esquerda) usando DO-WHILE
-    printf("\nMovimento da Rainha:\n");
-    int contador_rainha = 0;
-    do {
-        printf("Esquerda\n");
-        contador_rainha++;
-    } while (contador_rainha < MOV_RAINHA);
-
-    // Movimento do Cavalo usando loops aninhados
-    printf("\nMovimento do Cavalo:\n");
-    
-    // Loop externo FOR para controlar as direções
-    for (int direcao = 0; direcao < 2; direcao++) {
-        int num_movimentos;
-        char *direcao_str;
-        
-        // Define movimento e direção com base na iteração atual
-        if (direcao == 0) {
-            num_movimentos = MOV_CAVALO_VERTICAL;
-            direcao_str = "Baixo";
-        } else {
-            num_movimentos = MOV_CAVALO_HORIZONTAL;
-            direcao_str = "Esquerda";
+    // Movimento do Bispo (com loops aninhados)
+    printf("\nMovimento do Bispo (loops aninhados):\n");
+    for (int vertical = 0; vertical < MOV_BISPO; vertical++) {
+        for (int horizontal = 0; horizontal < 1; horizontal++) {
+            printf("Cima, Direita\n");
         }
-        
-        // Loop interno WHILE para executar os movimentos
-        int contador_cavalo = 0;
-        while (contador_cavalo < num_movimentos) {
-            printf("%s\n", direcao_str);
-            contador_cavalo++;
+    }
+
+    // Movimento da Rainha (recursivo)
+    printf("\nMovimento da Rainha (recursivo):\n");
+    mover_rainha(MOV_RAINHA);
+
+    // Movimento do Cavalo (loops aninhados complexos)
+    printf("\nMovimento do Cavalo (loops complexos):\n");
+    int vertical_feito = 0;
+    int horizontal_feito = 0;
+    
+    for (int etapa = 0; etapa < CAVALO_VERTICAL + CAVALO_HORIZONTAL; etapa++) {
+        for (int passo = 0; passo < 1; passo++) {  // Loop interno para controle de direção
+            
+            // Executa movimentos verticais primeiro
+            if (vertical_feito < CAVALO_VERTICAL) {
+                printf("Cima\n");
+                vertical_feito++;
+                continue;  // Pula para próxima iteração
+            }
+            
+            // Executa movimentos horizontais após completar verticais
+            if (horizontal_feito < CAVALO_HORIZONTAL) {
+                printf("Direita\n");
+                horizontal_feito++;
+                break;  // Sai do loop interno após movimento horizontal
+            }
         }
     }
 
